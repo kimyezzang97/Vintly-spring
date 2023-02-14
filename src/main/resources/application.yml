@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://222.117.117.110:3307/vintly
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: kyc
+    password: kyc1234
+
