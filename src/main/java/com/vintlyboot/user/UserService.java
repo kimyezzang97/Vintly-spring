@@ -19,6 +19,11 @@ public class UserService {
             return userRepository.countByUserId(id);
         }
 
+    // email 중복 체크
+    public int getChkEmail(String email){
+        return userRepository.countByEmail(email);
+    }
+
     }
 
 

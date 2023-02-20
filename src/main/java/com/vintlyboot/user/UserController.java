@@ -16,9 +16,15 @@ public class UserController {
         this.userService = userService;
     }
 
+    // ID 중복 확인
     @GetMapping("/id/{id}")
     public int getChkId(@PathVariable("id") String id){
         return userService.getChkId(id);
     }
 
+    // email 중복 확인
+    @GetMapping("/email/{email}")
+    public int getChkEmail(@PathVariable("email") String email){
+        return userService.getChkEmail(email);
+    }
 }
