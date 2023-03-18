@@ -6,15 +6,18 @@ import com.vintlyboot.user.model.ReqJoinDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
     private UserRepository userRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
-    public UserService(UserRepository userRepository){
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     // 중복 아이디 체크
@@ -42,6 +45,9 @@ public class UserService {
                             .message("중복확인을 다시 해주세요")
                             .build() );
         }
+        // 비밀번호 암호화
+        String encodePassword = bCryptPasswordEncoder.encode(reqJoinDTO.getUserPw());
+        reqJoinDTO.setUserPw(encodePassword);
         String id = userRepository.save(reqJoinDTO.toEntity()).getUserId();
 
         return ResponseEntity.status(HttpStatus.OK).body(CustomResponse.builder()
