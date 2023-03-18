@@ -7,11 +7,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor // 모든 파라미터 생성자
-@Builder
 public class CustomResponse {
 
-    int statusCode;
-    String message;
-    boolean ok;
+    private int statusCode;
+    private String message;
+    private boolean ok;
+    @Builder
+    public CustomResponse(int statusCode, String message,boolean ok ){
+        this.statusCode = statusCode;
+        this.message = message;
+        this.ok = ok;
+    }
 }
