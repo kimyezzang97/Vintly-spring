@@ -1,5 +1,9 @@
 package com.vintlyboot.entities;
 
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -7,7 +11,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "user", schema = "vintly", catalog = "")
-public class UserEntity {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idx")
@@ -64,7 +69,20 @@ public class UserEntity {
     @Column(name = "phone_code")
     private String phoneCode;
 
-
+    @Builder
+    public User(String userId, String userPw, String userName, String nickname, Date birth,
+                String email, String addr1, String addr2, String gender){
+        this.userId = userId;
+        this.userPw = userPw;
+        this.userName = userName;
+        this.nickname = nickname;
+        this.birth = birth;
+        this.email = email;
+        this.addr1 = addr1;
+        this.addr2 = addr2;
+        this.gender = gender;
+        this.useYn = "K";
+    }
     public int getIdx() {
         return idx;
     }
@@ -205,7 +223,7 @@ public class UserEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
+        User that = (User) o;
         return idx == that.idx && Objects.equals(userId, that.userId) && Objects.equals(userPw, that.userPw) && Objects.equals(userName, that.userName) && Objects.equals(birth, that.birth) && Objects.equals(email, that.email) && Objects.equals(phone, that.phone) && Objects.equals(addr1, that.addr1) && Objects.equals(addr2, that.addr2) && Objects.equals(gender, that.gender) && Objects.equals(useYn, that.useYn) && Objects.equals(regDate, that.regDate) && Objects.equals(pwDate, that.pwDate) && Objects.equals(delDate, that.delDate) && Objects.equals(emailCode, that.emailCode) && Objects.equals(emailExDate, that.emailExDate) && Objects.equals(phoneCode, that.phoneCode);
     }
 

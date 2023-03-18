@@ -1,7 +1,10 @@
 package com.vintlyboot.user;
 
+import com.vintlyboot.common.CustomResponse;
+import com.vintlyboot.entities.User;
 import com.vintlyboot.user.model.ReqJoinDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -31,19 +34,18 @@ public class UserService {
 
     // 회원가입 처리
     public ResponseEntity<?> createUser(ReqJoinDTO reqJoinDTO){
+        if(0!=getChkId(reqJoinDTO.getUserId()) || 0!=getChkEmail(reqJoinDTO.getEmail()) || 0!=getChkNickname(reqJoinDTO.getNickname())){
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body(CustomResponse.builder()
+                            .ok(false)
+                            .statusCode(HttpStatus.CONFLICT.value())
+                            .message("중복확인을 다시 해주세요")
+                            .build() );
+        }
+        String id = userRepository.save(reqJoinDTO.toEntity()).getUserId();
 
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(CustomResponse.builder()
+                .ok(true).statusCode(HttpStatus.OK.value()).message(id + " ID로 회원가입을 성공하였습니다.").build());
     }
 
-    // 회원가입 ID or email 중복 체크(중복+정규식)
-    public boolean chkIdJoin(String id){
-        boolean chk = true;
-        if(0!=getChkId(id)) chk = false;
-
-        // 정규식 체크
-        String idRegx = "/^[a-z]+[a-z0-9]{4,20}$/g";
-        if(idRegx.matches(id)!=true) chk = false;
-
-    return chk;
-    }
 }

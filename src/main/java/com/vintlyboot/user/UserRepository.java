@@ -1,11 +1,12 @@
 package com.vintlyboot.user;
 
-import com.vintlyboot.entities.UserEntity;
+import com.vintlyboot.entities.User;
+import com.vintlyboot.user.model.ReqJoinDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     // ID 중복 확인
     int countByUserId(String memberId);
@@ -16,7 +17,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // 닉네임 중복 체크
     int countByNickname(String nickname);
 
-    // 회원가입
-    @Override
-    <S extends UserEntity> S save(S entity);
+
 }
