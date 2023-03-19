@@ -3,10 +3,12 @@ package com.vintlyboot.entities;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -51,9 +53,11 @@ public class User {
     @Column(name = "use_yn")
     private String useYn;
     @Basic
+    @CreationTimestamp
     @Column(name = "reg_date")
     private Timestamp regDate;
     @Basic
+    @CreationTimestamp()
     @Column(name = "pw_date")
     private Timestamp pwDate;
     @Basic
@@ -81,7 +85,8 @@ public class User {
         this.addr1 = addr1;
         this.addr2 = addr2;
         this.gender = gender;
-        this.useYn = "K";
+        this.useYn = "K"; // 여기서 insert
+        this.emailExDate = Timestamp.valueOf(LocalDateTime.now().plusDays(3)); // 여기서 insert
     }
     public int getIdx() {
         return idx;
