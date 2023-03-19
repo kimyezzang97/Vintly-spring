@@ -10,6 +10,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Table(name = "user", schema = "vintly", catalog = "")
@@ -87,6 +88,7 @@ public class User {
         this.gender = gender;
         this.useYn = "K"; // 여기서 insert
         this.emailExDate = Timestamp.valueOf(LocalDateTime.now().plusDays(3)); // 여기서 insert
+        this.emailCode = String.valueOf(ThreadLocalRandom.current().nextInt(10000,1000000)); // 이메일코드 6자리 생성
     }
     public int getIdx() {
         return idx;
