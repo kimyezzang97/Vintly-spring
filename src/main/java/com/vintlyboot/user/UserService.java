@@ -46,8 +46,8 @@ public class UserService {
                             .build() );
         }
         // 비밀번호 암호화
-        String encodePassword = bCryptPasswordEncoder.encode(reqJoinDTO.getUserPw());
-        reqJoinDTO.setUserPw(encodePassword);
+        reqJoinDTO.setUserPw(bCryptPasswordEncoder.encode(reqJoinDTO.getUserPw()));
+
         String id = userRepository.save(reqJoinDTO.toEntity()).getUserId();
 
         return ResponseEntity.status(HttpStatus.OK).body(CustomResponse.builder()
