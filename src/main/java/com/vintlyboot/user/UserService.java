@@ -8,14 +8,21 @@ import com.vintlyboot.util.model.MailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 @Service
+@EnableScheduling
 public class UserService {
     private UserRepository userRepository;
 
@@ -99,4 +106,12 @@ public class UserService {
                 .message("이메일 인증에 성공하였습니다.")
                 .build());
     }
+
+    @Transactional
+    @Scheduled(cron = "0 0 17 * * *") // 매일 15시 실행
+    public void deleteExpiredId(){
+        int i = userRepository.deleteByEmailExDateBeforeAndUseYn(new Timestamp(System.currentTimeMillis()),"K");
+        System.out.println("삭제 성공 ? : " + i);
+    }
+
 }

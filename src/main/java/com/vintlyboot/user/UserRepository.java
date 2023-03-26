@@ -5,6 +5,9 @@ import com.vintlyboot.user.model.ReqJoinDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
@@ -22,5 +25,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // userId로 User엔티티 가져오기
     User findByUserIdAndEmailCode(String userId, String EmailCode);
+
+    // 인증기간 지난 ID 삭제
+    int deleteByEmailExDateBeforeAndUseYn(Timestamp today, String useYn);
 
 }
