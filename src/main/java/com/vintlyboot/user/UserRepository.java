@@ -17,5 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // 닉네임 중복 체크
     int countByNickname(String nickname);
 
+    // 아이디, 인증코드 체크
+    int countByUserIdAndEmailCode(String userId, String emailCode);
+
+    // userId로 User엔티티 가져오기
+    User findByUserIdAndEmailCode(String userId, String EmailCode);
 
 }

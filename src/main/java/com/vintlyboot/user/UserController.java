@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -39,8 +41,15 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/")
-    public ResponseEntity<?> createUser(@Valid @RequestBody ReqJoinDTO reqJoinDTO){
+    public ResponseEntity<?> createUser(@Valid @RequestBody ReqJoinDTO reqJoinDTO) throws MessagingException, IOException{
         return userService.createUser(reqJoinDTO);
+    }
+
+    // 회원가입 인증
+    @GetMapping("/enable")
+    public ResponseEntity<?> enableUser(@RequestParam String id, @RequestParam String code)  {
+
+        return userService.enableUser(id, code);
     }
 
 
